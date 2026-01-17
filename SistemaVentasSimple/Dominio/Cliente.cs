@@ -12,20 +12,21 @@ namespace Dominio
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string Dni { get; set; }
-        public string telefono { get; set; }
-        public string email { get; set; }
+        public string Telefono { get; set; }
+        public string Email { get; set; }
         public bool Estado { get; set; }
 
         public Cliente() { }
         
-        public Cliente(int id, string nombre, string Apellido, string dni,  string telefono, string email) 
+        public Cliente(int id, string nombre, string apellido, string dni,  string telefono, string email, bool estado) 
         {
-            this.IdCliente = id;
-            this.Nombre = nombre;
-            this.Apellido = Apellido;
-            this.Dni = Dni;
-            this.telefono = telefono;
-            this.email = email;
+            IdCliente = id;
+            Nombre = nombre;
+            Apellido = Apellido;
+            Dni = Dni;
+            Telefono = telefono;
+            Email = email;
+            Estado = estado;
         }
 
     }
