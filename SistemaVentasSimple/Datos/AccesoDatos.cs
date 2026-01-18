@@ -20,7 +20,7 @@ namespace Conexion
 
         public AccesoDatos()
         {
-            conexion = new SqlConnection("server=.\\SQLEXPRESS; database=DBAgendaContactos; integrated security=true");
+            conexion = new SqlConnection("server=.\\SQLEXPRESS; database=DBVentasSimples; integrated security=true");
             comando = new SqlCommand();
         }
 
