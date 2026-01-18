@@ -130,6 +130,6 @@ namespace Negocio
 
     }
 
-//•	Buscar: Recibe un string y devuelve un listado de clientes.
+//•	Buscar: Recibe un string y devuelve un listado de clientes. //
 
 }
