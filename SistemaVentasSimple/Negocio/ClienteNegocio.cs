@@ -2,10 +2,6 @@
 using Dominio;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Negocio
 {
@@ -15,7 +11,7 @@ namespace Negocio
         {
             AccesoDatos datos = new AccesoDatos();
             List<Cliente> lista = new List<Cliente>();
-            string query = "";
+            string query = "SELECT IdCliente, Nombre, Apellido, Dni, Telefono, Email, Estado FROM Clientes WHERE Estado = 1";
 
             try
             {
@@ -47,7 +43,7 @@ namespace Negocio
         public void Agregar(Cliente cliente)
         {
             AccesoDatos datos = new AccesoDatos();
-            string query = "";
+            string query = "INSERT INTO Clientes (Nombre, Apellido, Dni, Email, Telefono, Estado) VALUES (@nombre, @apellido, @dni, @email, @telefono, @estado)";
 
             try
             {
@@ -57,6 +53,7 @@ namespace Negocio
                 datos.setearParametro("@dni", cliente.Dni);
                 datos.setearParametro("@email", cliente.Email);
                 datos.setearParametro("@telefono", cliente.Telefono);
+                datos.setearParametro("@estado", cliente.Estado);
                 datos.ejecutarAccion();
             }
             finally
@@ -68,7 +65,7 @@ namespace Negocio
         public void Modificar(Cliente cliente)
         {
             AccesoDatos datos = new AccesoDatos();
-            string query = "";
+            string query = "UPDATE Clientes SET Nombre = @nombre, Apellido = @apellido, Dni = @dni, Email = @email, Telefono = @telefono WHERE IdCliente = @id";
 
             try
             {
@@ -90,7 +87,7 @@ namespace Negocio
         public void Eliminar(int id)
         {
             AccesoDatos datos = new AccesoDatos();
-            string query = "";
+            string query = "UPDATE Clientes SET Estado = 0 WHERE IdCliente = @id";
 
             try
             {
@@ -107,7 +104,7 @@ namespace Negocio
         public bool ExisteCliente(string dni)
         {
             AccesoDatos datos = new AccesoDatos();
-            string query = "";
+            string query = "SELECT IdCliente FROM Clientes WHERE Dni = @dni AND Estado = 1";
 
             try
             {
