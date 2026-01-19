@@ -148,12 +148,12 @@ namespace Negocio
         {
             List<Cliente> lista = new List<Cliente>();
             AccesoDatos datos = new AccesoDatos();
-            string query = "SELECT IdCliente, Nombre, Apellido, Dni, Telefono, Email, Estado FROM Clientes WHERE Estado = 1 AND Dni LIKE '%@filtro%';";
+            string query = "SELECT IdCliente, Nombre, Apellido, Dni, Telefono, Email, Estado FROM Clientes WHERE Estado = 1 AND Dni LIKE @filtro";
 
             try
             {
                 datos.setearConsulta(query);
-                datos.setearParametro("@filtro", dni);
+                datos.setearParametro("@filtro", $"%{dni}%");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -184,7 +184,5 @@ namespace Negocio
         }
 
     }
-
-//•	Buscar: Recibe un string y devuelve un listado de clientes. //
 
 }

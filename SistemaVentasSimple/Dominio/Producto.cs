@@ -9,6 +9,7 @@ namespace Dominio
     public class Producto
     {
         public int IdProducto { get; set; }
+        public string Codigo { get; set; }
         public string Nombre { get; set; }
         public string Marca { get; set; }
         public string Descripcion { get; set; }
@@ -19,9 +20,10 @@ namespace Dominio
 
         public Producto() { }
 
-        public Producto(int idProducto, string nombre, string marca, string descripcion, decimal precio, int stock, bool estado)
+        public Producto(int idProducto, string codigo, string nombre, string marca, string descripcion, decimal precio, int stock, bool estado)
         {
             IdProducto = idProducto;
+            Codigo = codigo;
             Nombre = nombre;
             Marca = marca;
             Descripcion = descripcion;
