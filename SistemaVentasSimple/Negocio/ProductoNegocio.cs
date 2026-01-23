@@ -149,9 +149,4 @@ namespace Negocio
             }
         }
     }
-
-    /*
-        •	ActualizarStock: Recibe un Producto y una cantidad, no devuelve nada.
-
-     */
 }

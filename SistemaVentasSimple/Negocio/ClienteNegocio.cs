@@ -43,6 +43,44 @@ namespace Negocio
             }
         }
 
+        public Cliente BuscarPorId(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            string query = "SELECT IdCliente, Nombre, Apellido, Dni, Telefono, Email, Estado FROM Clientes WHERE IdCliente = @id";
+            Cliente aux = new Cliente();
+            try
+            {
+                datos.setearConsulta(query);
+                datos.setearParametro("@id", id);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    aux.IdCliente = datos.Lector["IdCliente"] is DBNull ? 0 : (int)datos.Lector["IdCliente"];
+                    aux.Nombre = datos.Lector["Nombre"] is DBNull ? "" : (string)datos.Lector["Nombre"];
+                    aux.Apellido = datos.Lector["Apellido"] is DBNull ? "" : (string)datos.Lector["Apellido"];
+                    aux.Dni = datos.Lector["Dni"] is DBNull ? "" : (string)datos.Lector["Dni"];
+                    aux.Email = datos.Lector["Email"] is DBNull ? "" : (string)datos.Lector["Email"];
+                    aux.Telefono = datos.Lector["Telefono"] is DBNull ? "" : (string)datos.Lector["Telefono"];
+                    aux.Estado = datos.Lector["Estado"] is DBNull ? false : (bool)datos.Lector["Estado"];
+                }
+                else
+                {
+                    return null;
+                }
+
+                return aux;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al bucar el cliente", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public void Agregar(Cliente cliente)
         {
             AccesoDatos datos = new AccesoDatos();
