@@ -10,9 +10,16 @@ namespace Negocio
 {
     public class ProductoNegocio
     {
+
+        private AccesoDatos datos = new AccesoDatos();
+
+        public ProductoNegocio() { }
+        public ProductoNegocio(AccesoDatos datos)
+        {
+            this.datos = datos;
+        }
         public List<Producto> Listar()
         {
-            AccesoDatos datos = new AccesoDatos();
             List<Producto> lista = new List<Producto>();
             string query = "  SELECT IdProducto, Codigo, Nombre, Marca, Descripcion, Precio, Stock, Estado FROM Productos WHERE Estado = 1";
 
@@ -50,7 +57,6 @@ namespace Negocio
 
         public void Agregar(Producto producto)
         {
-            AccesoDatos datos = new AccesoDatos();
             string query = "INSERT INTO Productos (Codigo, Nombre, Marca, Descripcion, Precio, Stock, Estado) VALUES (@codigo, @nombre, @marca, @descripcion, @precio, @stock, @estado)";
 
             try
@@ -78,7 +84,6 @@ namespace Negocio
 
         public void Modificar(Producto producto)
         {
-            AccesoDatos datos = new AccesoDatos();
             string query = "UPDATE Productos SET Codigo = @codigo, Nombre = @nombre, Marca = @marca, Descripcion = @descripcion, Precio = @precio, Stock = @stock, Estado = @estado WHERE IdProducto = @id";
 
             try
@@ -107,7 +112,6 @@ namespace Negocio
 
         public void Eliminar (int id)
         {
-            AccesoDatos datos = new AccesoDatos();
             string query = "UPDATE Productos SET Estado = 0 WHERE IdProducto = @id";
 
             try
@@ -129,7 +133,6 @@ namespace Negocio
 
         public void ActualizarStock(Producto producto, int cantidad)
         {
-            AccesoDatos datos = new AccesoDatos();
             string query = "UPDATE Productos SET Stock += @cantidad WHERE IdProducto = @id";
 
             try
@@ -148,5 +151,23 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+        public void DescontarStock(Producto producto, int cantidad)
+        {
+            string query = "UPDATE Productos SET Stock -= @cantidad WHERE IdProducto = @id";
+
+            try
+            {
+                datos.setearConsulta(query);
+                datos.setearParametro("@cantidad", cantidad);
+                datos.setearParametro("@id", producto.IdProducto);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al descontar stock de productos", ex);
+            }
+        }
+
     }
 }

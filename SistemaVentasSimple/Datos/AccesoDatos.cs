@@ -39,9 +39,9 @@ namespace Conexion
                 conexion.Open();
                 lector = comando.ExecuteReader();
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception("Error al ejecutar Lectura", ex);
             }
         }
 
@@ -53,15 +53,35 @@ namespace Conexion
                 conexion.Open();
                 comando.ExecuteNonQuery();
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception("Error al ejecutar Accion", ex);
+            }
+        }
+
+        public object ejecutarEscalar()
+        {
+            comando.Connection = conexion;
+
+            try
+            {
+                conexion.Open();
+                return comando.ExecuteScalar();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("Error al ejecutar escalar", ex);
             }
         }
 
         public void setearParametro(string nombre, object valor)
         {
             comando.Parameters.AddWithValue(nombre, valor);
+        }
+
+        public void limpiarParametros()
+        {
+            comando.Parameters.Clear();
         }
 
         public void cerrarConexion()

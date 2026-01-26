@@ -11,12 +11,12 @@ namespace Dominio
         public int IdVenta { get; set; }
         public Cliente Cliente { get; set; }
         public DateTime Fecha { get; set; }
-        public ProductoVenta Productos { get; set; }
+        public List<ProductoVenta> Productos { get; set; }
         public decimal MontoFinal { get; set; }
 
         public Venta() { }
 
-        public Venta(int idVenta, Cliente cliente, DateTime fecha, ProductoVenta productos, decimal montoFinal)
+        public Venta(int idVenta, Cliente cliente, DateTime fecha, List<ProductoVenta> productos, decimal montoFinal)
         {
             IdVenta = idVenta;
             Cliente = cliente;

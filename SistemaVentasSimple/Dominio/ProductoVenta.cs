@@ -10,7 +10,7 @@ namespace Dominio
     {
         public Producto Producto { get; set; }
         public int Cantidad { get; set; }
-        public decimal MontoFinal { get; set; }
+        public decimal MontoTotal { get; set; }
 
         public ProductoVenta() { }
         public ProductoVenta(Producto producto, int cantidad) 
