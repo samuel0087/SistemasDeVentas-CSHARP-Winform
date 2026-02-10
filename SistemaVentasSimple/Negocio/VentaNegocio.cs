@@ -5,6 +5,9 @@ using Conexion;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Win32;
+using System.Collections;
+using System.Threading;
 
 namespace Negocio
 {
@@ -144,12 +147,46 @@ namespace Negocio
                 throw new Exception("Error al registrar los productos vendidos", ex);
             }
         }
+
+        public void ProcesarVenta(Venta venta)
+        {
+            ProductoNegocio productoNegocio = new ProductoNegocio(datos);
+            try
+            {
+                //Validar el stock disponible de cada producto incluido en la venta.
+                foreach (ProductoVenta productoVenta in venta.Productos)
+                {
+                    if (!ValidarStock(productoVenta.Producto.IdProducto, productoVenta.Cantidad))
+                    {
+                        throw new Exception($"Stock Insuficiente para el producto: {productoVenta.Producto.Nombre}");
+                    }
+                }
+
+                //Calcular el monto final de la venta.
+                venta.MontoFinal = CalcularMontoFinal(venta.Productos);
+
+                //Registrar la venta en la tabla Ventas y obtener su IdVenta.
+                Venta ventaRegistrada = Agregar(venta);
+
+                //Registrar los productos vendidos en la tabla ProductosXVentas.
+                RegistrarProductoXVenta(ventaRegistrada);
+
+                //Descontar el stock de los productos vendidos.
+                foreach (ProductoVenta productoV in venta.Productos)
+                {
+                    productoNegocio.DescontarStock(productoV.Producto, productoV.Cantidad);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
         
     }
 
-    /*
-     * Agregar un método VentaNegocio.RegistrarProductosXVenta
-     * Función del método: Recibe un objeto venta y no devuelve nada.
-     * Descripción: Este método se utilizara para registrar todos los productos por venta en la tabla ProductoXventas junto al IdVenta
-     */
 }
