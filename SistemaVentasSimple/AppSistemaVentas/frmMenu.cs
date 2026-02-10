@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using Negocio;
+using System.Windows.Forms;
 
 namespace AppSistemaVentas
 {
@@ -7,6 +8,12 @@ namespace AppSistemaVentas
         public frmMenu()
         {
             InitializeComponent();
+        }
+
+        private void btnClientes_Click(object sender, System.EventArgs e)
+        {
+            frmClientes frmClientes = new frmClientes();
+            frmClientes.ShowDialog();
         }
     }
 }
