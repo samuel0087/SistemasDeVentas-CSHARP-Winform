@@ -221,6 +221,20 @@ namespace Negocio
             }
         }
 
+        public List<Cliente> BuscarConFiltro(string filtro)
+        {
+            List<Cliente> listaFiltrada = new List<Cliente>();
+            try
+            {
+                listaFiltrada = this.Listar().FindAll(cliente => cliente.Nombre.ToUpper().Contains(filtro.ToUpper()) || cliente.Apellido.ToUpper().Contains(filtro.ToUpper()) || cliente.Dni.Contains(filtro));
+                return listaFiltrada;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al buscar clientes con filtros", ex);
+            }
+        }
+
     }
 
 }

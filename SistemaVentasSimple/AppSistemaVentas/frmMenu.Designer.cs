@@ -70,6 +70,7 @@
             this.Controls.Add(this.btnProductos);
             this.Controls.Add(this.btnVentas);
             this.Name = "frmMenu";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmMenu";
             this.ResumeLayout(false);
 

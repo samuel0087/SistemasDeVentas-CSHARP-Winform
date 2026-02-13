@@ -15,6 +15,7 @@ namespace AppSistemaVentas
     public partial class frmClientes : Form
     {
         private ClienteNegocio cNegocio = new ClienteNegocio();
+        private List<Cliente> clientes;
         public frmClientes()
         {
             InitializeComponent();
@@ -33,7 +34,8 @@ namespace AppSistemaVentas
         private void Cargar()
         {
             CambiarEstado(false);
-            CargarLista(cNegocio.Listar());
+            clientes = cNegocio.Listar();
+            CargarLista(clientes);
         }
 
         private void CargarLista(List<Cliente> clientes)
@@ -43,6 +45,7 @@ namespace AppSistemaVentas
                 dgvClientes.DataSource = null;
                 dgvClientes.DataSource = clientes;
                 dgvClientes.Columns["IdCliente"].Visible = false;
+                dgvClientes.Columns["Estado"].Visible=false;
             }
             catch
             {
@@ -58,5 +61,16 @@ namespace AppSistemaVentas
             btnEliminar.Enabled = estado;
         }
 
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            if(txtBuscar.Text.Length > 2)
+            {
+                CargarLista(cNegocio.BuscarConFiltro(txtBuscar.Text));
+            }
+            else
+            {
+                CargarLista(cNegocio.Listar());
+            }
+        }
     }
 }
